@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style type="text/css">
+#topRow{
+	min-height:50px;
+	max-height:500px;
+	float:top;
+	//background-color:black;
+	}
+
+#clock{
+	background-color:rgba(0,0,0,0.5);
+	min-height:50px;
+	max-height:500px;
+	min-width:50px;
+	max-width:500px;
+	float:left;
+	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+	font-size:300%;
+	color:white;
+	}
+	
+#date{
+	background-color:rgba(0,0,0,0.5);
+	min-height:50px;
+	max-height:500px;
+	min-width:50px;
+	max-width:500px;
+	float:right;
+	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+	font-size:150%;
+	color:white;
+	}
+	
+#menuBar{
+	background-color:rgba(0,0,0,0.5);
+	min-height:50px;
+	max-height:50px;
+	height:50px;
+	min-width:50px;
+	max-width:250px;
+	margin-left:auto;
+	margin-right:auto;
+	//float:right;
+	font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+	font-size:150%;
+	color:white;
+	}
+	
+#settingsButton{
+	background-color:rgba(0,0,0,1.0);
+	min-height:45px;
+	max-height:50px;
+	min-width:50px;
+	max-width:50px;
+	float:right;
+	font-size:50%;
+	color:white;
+	border-style:none;
+}
+
+#bottom{
+	min-height:350px;
+	max-height:350px;
+	float:bottom;
+	margin-top: 100px;
+	//background-color:rgba(0,0,0,0.5);
+	overflow: hidden;
+	}
+	
+#bottomLeft{
+	min-height:100%;
+	max-height:100%;
+	min-width:40%;
+	max-width:40%;
+	float:left;
+	position:relative;
+	background-color:rgba(255,255,255,0.5);
+	color:black;
+	}
+	
+#bottomRight{
+	min-height:100%;
+	max-height:100%;
+	min-width:40%;
+	max-width:40%;
+	float:right;
+	position:relative;
+	background-color:rgba(255,255,255,0.5);
+	color:black;
+	}
+	
+#settingsDiv{
+	background-color:white;
+	min-height:100%
+	max-height:100%
+	min-width:90%
+	max-width:90%
+	margin-left:auto;
+	margin-right:auto;
+	float:top;
+}
+
+#toolBar{
+	background-color:black;
+	color:white;
+	min-height:20px;
+	max-height:20px;
+	min-width:100%;
+	max-width:100%;
+	float:top;
+}
+
+#exitButton{
+	background-color:black;
+	color:white;
+	min-height:15px;
+	max-height:18px;
+	min-width:15px;
+	max-width:18px;
+	float:right;
+	border-style:none;
+	font-size:100%;
+}
+
+#settingsArea{
+	background-color:white;
+	color:black;
+	min-height:500px;
+	max-height:600px;
+	float:bottom;
+}
+	
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+var jq = $.noConflict();
+//fades in elements of page at load
+jq(document).ready(function(){
+	jq("#clock").click(function(){
+		jsApi.emit_sigNewTab();
+	});
+});
+
+jq(document).ready(function(){
+    jq("#clock").css({display:'none'}).fadeIn(1000);
+    jq("#date").css({display:'none'}).fadeIn(1000);
+    jq("#menuBar").css({display:'none'}).fadeIn(1000);
+    jq("#bottom").css({display:'none'}).slideDown(1000);
+});
+
+//randomized background image array
+var image_array = new Array();
+image_array[0] = "wave.jpg";
+image_array[1] = "blur2.jpg";
+image_array[2] = "mesa.jpg";
+image_array[3] = "waterfall.jpg";
+image_array[4] = "leaves.jpg";
+image_array[5] = "snow.jpg";
+image_array[6] = "blur.jpg";
+var rand_path = image_array[Math.floor(Math.random() * image_array.length)];
+//applies randomized background image
+jq(document).ready(function() {
+    jq("#body").css('background-image', 'url('+rand_path+')');
+});
+
+//creates settings window
+jq(document).ready(function(){
+	jq("#settingsButton").click(function(){
+		//creates settingsDiv
+		jq("#body").prepend("<div id='settingsDiv'>text</div>");
+		//fades out background
+		jq("#topRow, #bottom").fadeOut(1000, function(){
+			jq("#topRow").hide();
+			jq("#bottom").hide();
+		});
+		//creates everything within settingsDiv
+		jq("#settingsDiv").css({display:'none'}).fadeIn(2000);
+		jq("#settingsDiv").prepend("<div id='toolBar'></div>");
+			jq("#toolBar").prepend("<button id='exitButton'>X</button>");
+			jq("#settingsDiv").append("<div id='settingsArea'>settings area</div>");
+			
+			
+			//handles closing settings window
+			jq("#exitButton").click(function(){
+				jq("#settingsDiv").fadeOut(2000, function(){
+					jq("#settingsDiv").remove("#settingsDiv");
+					jq("#topRow, #bottom").fadeIn(1000, function(){
+						jq("#topRow").show();
+						jq("#bottom").show();
+					});
+				});
+			});
+	});
+});
+
+function startAll()
+{
+	startTime();
+	dateWidget();
+}
+
+function startTime()
+{
+	var today = new Date();
+	var hour = today.getHours();
+	var minute = today.getMinutes();
+	var second = today.getSeconds();
+	// add a zero in front of numbers<10
+	minute = checkTime(minute);
+	second = checkTime(second);
+	document.getElementById('clock').innerHTML=hour+":"+minute+":"+second;
+	t=setTimeout(function(){startTime()},500);
+}
+
+function checkTime(i)
+{
+	if (i<10)
+  	{
+  		i="0" + i;
+  	}
+return i;
+}
+
+function dateWidget()
+{
+	var today = new Date();
+	var day = today.getDay();
+	var year = today.getFullYear();
+	var weekday=new Array(7);
+	weekday[0]="Sunday";
+	weekday[1]="Monday";
+	weekday[2]="Tuesday";
+	weekday[3]="Wednesday";
+	weekday[4]="Thursday";
+	weekday[5]="Friday";
+	weekday[6]="Saturday";
+	var month = new Array(12);
+	month[0]="January";
+	month[1]="February";
+	month[2]="March";
+	month[3]="April";
+	month[4]="May";
+	month[5]="June";
+	month[6]="July";
+	month[7]="August";
+	month[8]="September";
+	month[9]="October";
+	month[10]="November";
+	month[11]="December";
+	document.getElementById("date").innerHTML=weekday[today.getDay()]+", "+month[today.getMonth()]+" "+day+", "+year;
+}
+</script>
+</head>
+
+<body id="body" onload="startAll()" style="background-attachment:fixed;">
+<div id="topRow">
+	<div id="clock"></div>
+	<div id="date"></div>
+	<div id="menuBar">
+		<button id="settingsButton">Settings</button>
+	</div>
+</div>
+<div id="bottom">
+	<div id="bottomLeft">
+		<table style="width:150px; height:100%; min-height:100%;">
+			<tr>
+  				<td><a href="https://www.facebook.com"><img src="FBicon.png"></a></td>
+  				<td><a href="https://mail.google.com/intl/en/mail/help/about.html"><img src="GmailIcon.png"></a></td> 
+  				<td><a href="http://www.youtube.com"><img src="youtubeIcon.png"></a></td>
+			</tr>
+			<tr>
+  				<td><a href="https://www.wikipedia.org/"><img src="wikipediaIcon.png"></a></td>
+  				<td bgcolor=><a href="http://www.nytimes.com"><img src="nyt.jpg"></td> 
+  				<td bgcolor=><a href=""><img src=></td>
+			</tr>
+		</table>
+	</div>
+	<div id="bottomRight">
+		<form method="get" action="http://www.google.com/search">
+		<div style="border:0px solid black; padding:4px; width:100%; height:100%;">
+			<table border="0" align="center" cellpadding="0">
+				<tr><td>
+				<input type="text"   name="q" size="50" style="color:#808080; height:40px; width:350px; font-size:100%;"
+				maxlength="255" value="Google Search"
+				onfocus="if(this.value==this.defaultValue)this.value=''; this.style.color='black';" onblur="if(this.value=='')this.value=this.defaultValue; "/>
+				<input type="submit" value="Go!" style="background-color:rgb(57,192,214); color:black; font-size:100%; height:40px; width:40px; border-style:none;"/>
+			</table>
+		</div>
+	</div>
+</div>
+	
+</body>
+</html>

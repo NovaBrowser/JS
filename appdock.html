@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+var jq = $.noConflict();
+//fades in elements of page at load
+jq(document).ready(function(){
+	jq("#app1").click(function(){
+		jq("#app1").fadeOut(2000);
+		jq("#app1").fadeIn(2000);
+		jq("#app1").fadeOut(2000);
+		jq("#app1").fadeIn(2000);
+	});
+	
+	jq("#app2").click(function(){
+		jq("#app2").fadeOut(2000);
+		jq("#app2").fadeIn(2000);
+		jq("#app2").fadeOut(2000);
+		jq("#app2").fadeIn(2000);
+	});
+	
+	jq("#app3").click(function(){
+		jq("#app3").fadeOut(2000);
+		jq("#app3").fadeIn(2000);
+		jq("#app3").fadeOut(2000);
+		jq("#app3").fadeIn(2000);
+	});
+	
+	jq("#app4").click(function(){
+		jq("#app4").fadeOut(2000);
+		jq("#app4").fadeIn(2000);
+		jq("#app4").fadeOut(2000);
+		jq("#app4").fadeIn(2000);
+	});
+	
+	jq("#app5").click(function(){
+		jq("#app5").fadeOut(2000);
+		jq("#app5").fadeIn(2000);
+		jq("#app5").fadeOut(2000);
+		jq("#app5").fadeIn(2000);
+	});
+	
+	jq("#app6").click(function(){
+		jq("#app6").fadeOut(2000);
+		jq("#app6").fadeIn(2000);
+		jq("#app6").fadeOut(2000);
+		jq("#app6").fadeIn(2000);
+	});
+});
+
+
+</script>
+
+<style type="text/css">
+	
+#container{
+	width:100px; 
+	height:100%;
+	}
+	
+.app{
+	background-color:red;
+	width:64px;
+	height:64px;
+	margin-bottom:10px;
+	}
+	
+#pic{
+	background-color:blue;
+	width:100%;
+	height:64px;
+	float:top;
+	}
+
+</style>
+
+</head>
+
+<body background="" style=""> 
+<noscript>Sorry, your browser does not support JavaScript</noscript>
+
+<div id="container">
+
+	<div class="app" id="app1">
+		<div id="pic">
+			<a href="http://www.nytimes.com"><img src="goldengate.jpg" style="height:100%; width:100%;"></a>
+		</div>
+	</div>
+	
+	<div class="app" id="app2">
+		<div id="pic">
+			<a href="http://www.nytimes.com"><img src="eiffeltower.jpg" style="height:100%; width:100%;"></a>
+		</div>
+	</div>
+	
+	<div class="app" id="app3">
+		<div id="pic">
+			<a href="http://www.nytimes.com"><img src="venusflytrap.jpg" style="height:100%; width:100%;"></a>
+		</div>
+	</div>
+	
+	<div class="app" id="app4">
+		<div id="pic">
+			<a href="http://www.nytimes.com"><img src="goldengate.jpg" style="height:100%; width:100%;"></a>
+		</div>
+	</div>
+	
+	<div class="app" id="app5">
+		<div id="pic">
+			<a href="http://www.nytimes.com"><img src="eiffeltower.jpg" style="height:100%; width:100%;"></a>
+		</div>
+	</div>
+	
+	<div class="app" id="app6">
+		<div id="pic">
+			<a href="http://www.nytimes.com"><img src="venusflytrap.jpg" style="height:100%; width:100%;"></a>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>	
+	
